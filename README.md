@@ -1,5 +1,5 @@
 # Reminder Service
-This is the Booking microservice for the Airline Management Project.
+This is the Reminder microservice for the Airline Management Project.
 ### Project Setup
 1. Clone the project
 2. Run ```npm install``` in the command propmt
