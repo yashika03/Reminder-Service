@@ -1,7 +1,11 @@
 const sender = require('../config/email-config');
-const SendBasicEmail = (mailFrom, mailTo, mailSubject, mailBody) =>{
+const TicketRepository = require('../repository/ticket-repository');
+
+const repo = new TicketRepository();
+
+const SendBasicEmail = async (mailFrom, mailTo, mailSubject, mailBody) =>{
     try {
-        const response  = sender.sendMail({
+        const response  = await sender.sendMail({
             from: mailFrom,
             to: mailTo,
             subject: mailSubject,
@@ -12,6 +16,39 @@ const SendBasicEmail = (mailFrom, mailTo, mailSubject, mailBody) =>{
     }
 }
 
+
+const fetchPendingEmails = async() => {
+    try {
+        const response = await repo.get({status: "PENDING"});
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+const updateTicket = async(ticketId, data) =>
+{
+    try {
+        const response = repo.update(ticketId, data);
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const createNotification = async(data) => {
+    try {
+        const response = await repo.create(data);
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
-    SendBasicEmail
+    SendBasicEmail,
+    fetchPendingEmails,
+    createNotification,
+    updateTicket
 }

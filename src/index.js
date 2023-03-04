@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 
 const {PORT} = require('./config/serverConfig');
 
+const TicketController = require('./controllers/ticket-controller');
+const jobs = require('./utils/job');
 // const {SendBasicEmail} = require('./services/email-service');
 const ServerSetup = () => 
 {
@@ -10,8 +12,11 @@ const ServerSetup = () =>
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true}));
 
+    app.post('/api/v1/tickets',TicketController.create);
     app.listen(PORT, () => {
         console.log(`Server started at PORT: ${PORT}`);
+        // console.log(moment().format());
+        jobs();
     });
     // SendBasicEmail(
     //     'support@admin.com',
